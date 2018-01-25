@@ -9,7 +9,7 @@
         </div>
         <div id="showlist" ></div>
         <script>
-        var json = [{
+       /** var json = [{
             "name": "中科慈航",
             "code": "ZKCH",
             "icon": "icon-th",
@@ -65,18 +65,53 @@
                     "child": []
                 }]
             }]
-        }];
-        function tree(data){
+        }];*/
+       var data = [
+            {id: 6, parent_id: 2, data: '这是其他数据'},
+            {id: 7, parent_id: 3, data: '这是其他数据'},
+            {id: 2, parent_id: 1, data: '这是其他数据'},
+            {id: 4, parent_id: 2, data: '这是其他数据'},
+            {id: 1, parent_id: 0, data: '这是其他数据'},
+            {id: 9, parent_id: 5, data: '这是其他数据'},
+            {id: 8, parent_id: 3, data: '这是其他数据'},
+            {id: 3, parent_id: 1, data: '这是其他数据'},
+            {id: 5, parent_id: 2, data: '这是其他数据'},
+            {id: 10, parent_id:6, data: '这是其他数据'}
+            ] 
+function jsontree(data){
+    var idmap = new Array();
+    var jsontree=new Array();
+    var id;
+    var pid;
+    for(var i =0;i<data.length;i++){
+        id=data[i].id;
+        idmap[id]=data[i];
+        idmap[id].children=[];
+
+    }
+    for(var i =0;i<data.length;i++){
+        id = data[i].id;
+        pid = data[i].parent_id;
+        if(idmap[pid]){
+            console.log("here");
+            idmap[pid].children.push(idmap[id]);         
+        }else{
+            jsontree.push(idmap[id]);
+        }
+    }
+    console.log(jsontree);
+}
+jsontree(data);
+        /**function tree(data){
             if(data!=""){
                 var ul = '<ul>';
                 for(var i=0;i<data.length;i++){
-                    //ul+='<li data-code='+data[i].code+'>'+data[i].name+'</li>';
                     if(data[i].child!=""){
-                        ul+='<li data-code='+data[i].code+" "+'data-people='+data[i].people+'><span><button>-</button></span>'+data[i].name;
+                        ul+='<li data-code='+data[i].code+" "+'data-people='+data[i].people+'><span><button>-</button></span>'+data[i].name;//若还有子元素，则显示折层按钮
                         console.log("here");
                         ul+=tree(data[i].child);
                     }else{
-                        ul+='<li data-code='+data[i].code+" "+'data-people='+data[i].people+'>'+data[i].name;
+                        ul+='<li data-code='+data[i].code+" "+'data-people='+data[i].people+'>'+data[i].name; //无子元素，单独显示
                     }
                 }
                 ul+='</li></ul>' ;
@@ -107,7 +142,7 @@
                    }
                    return false; //执行一次  不再冒泡
                })
-           })
+           })*/
         </script>
     </body>
 </html>
